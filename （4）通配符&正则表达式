@@ -1,5 +1,5 @@
 （1）LIKE操作符
-select prod_id,prod_name from products where prod_name LIKE 'jet%';使用了搜索模式‘jet%’，将检索以jet开头的词，%告诉mysql，jet之后的任意字符
+select prod_id,prod_name from products where prod_name LIKE 'jet%';使用了搜索模式‘jet%’，检索以jet开头的词，%告诉mysql，jet之后的任意字符
 （根据mysql的配置方式，搜索可以区分大小写）
 select prod_id,prod_name from products where prod_name LIkE '%anvil%';表示可以匹配任何包含文本anvil的值，不论之前或之后出现什么字符
 （通配符可以在搜索模式中任意位置使用，并且可使用多个通配符）
@@ -26,4 +26,33 @@ select prod_name from products where prod_name REGEXP '[0123456789] Ton' order b
 select prod_name from products where prod_name REGEXP '[0-9] Ton' order by prod_name;同上
 select prod_name from products where prod_name REGEXP '[a-z] Ton' order by prod_name;
 （8）匹配特殊字符
-select vend_name from vendors where vend_name REGEXP '\\.' order by vend_name;匹配特殊字符，必须以\\为前导，这种处理是转义，应用与特殊字符
+select vend_name from vendors where vend_name REGEXP '\\.' order by vend_name;匹配特殊字符，必须以\\为前导，这种处理是转义，应用于特殊字符
+
+
+（9）匹配字符类
+[:alnum:]任意字母和数字（同[a-zA-Z0-0]）
+[:alpha:]任意字符（同[a-zA-Z]）
+[:blank:]空格和制表符（同[\\t]）
+[:lower:]任意小写字母（同[a-z]）
+[:upper:]任意大写字母（同[A-Z]）
+[:xdigit:]任意十六进制数字（同[a-fA-F0-9]）
+(10)匹配多个实例
+select prod_name from products where prod_name REGEXP '\\(0-9) sticks?\\)' order by prod_name;
+\\（匹配）[0-9]任意数字，sticks?(匹配）stick或sticks(s后的？使s可选）
+select prod_name from products where prod_name REGEXP '[[:digit:]]{4}' order by prod_name;
+[:digit:]匹配任意数字，{4}要求它前面的字符（任意数字）出现4次；意思是匹配连在一起的任意四位数字
+select prod_name from products where prod_name REGEXP '[0-9][0-9][0-9][0-9]' order by prod_name;达到的效果同上
+
+（11）定位符——匹配特定位置的文本
+^ 文本的开始（以前学的^还有另一种用法：否定）
+$ 文本的结尾
+[[:<:]] 词的开始
+[[:>:]]词的结尾
+select prod_name from products where prod_name REGEXP '^[0-9\\.]' order by prod_name;
+^匹配串的开始；^[0-9\\.]只在.或任意数字为串的第一个字符时才匹配它们
+
+
+
+
+
+
