@@ -6,7 +6,7 @@ show columns from customers;显示customers表的内容；
 2.建立一张customers表
 CREATE TABLE customers
 (
-  cust_id      int       NOT NULL AUTO_INCREMENT,
+  cust_id      int       NOT NULL AUTO_INCREMENT,每当增加一行时自动增量
   cust_name    char(50)  NOT NULL ,
   cust_address char(50)  NULL ,
   cust_city    char(50)  NULL ,
@@ -15,9 +15,9 @@ CREATE TABLE customers
   cust_country char(50)  NULL ,
   cust_contact char(50)  NULL ,
   cust_email   char(255) NULL ,
-  PRIMARY KEY (cust_id)
-) ENGINE=InnoDB;
-为customers表赋值
+  PRIMARY KEY (cust_id)因为cust_id是唯一的所以适合作为主键
+) ENGINE=InnoDB;引擎类型为InnoDB
+3.为customers表赋值
 INSERT INTO customers(cust_id, cust_name, cust_address, cust_city, cust_state, cust_zip, cust_country, cust_contact, cust_email)
 VALUES(10001, 'Coyote Inc.', '200 Maple Lane', 'Detroit', 'MI', '44444', 'USA', 'Y Lee', 'ylee@coyote.com');
 INSERT INTO customers(cust_id, cust_name, cust_address, cust_city, cust_state, cust_zip, cust_country, cust_contact)
@@ -28,3 +28,11 @@ INSERT INTO customers(cust_id, cust_name, cust_address, cust_city, cust_state, c
 VALUES(10004, 'Yosemite Place', '829 Riverside Drive', 'Phoenix', 'AZ', '88888', 'USA', 'Y Sam', 'sam@yosemite.com');
 INSERT INTO customers(cust_id, cust_name, cust_address, cust_city, cust_state, cust_zip, cust_country, cust_contact)
 VALUES(10005, 'E Fudd', '4545 53rd Street', 'Chicago', 'IL', '54545', 'USA', 'E Fudd');
+4.更新表
+alter table customers add cust_phone char(20);添加一列
+alter table customers drop columns cust_phone;删除列cust_phone
+5.删除表
+drop talbe customers;
+6.重命名表
+rename table customers to customers1;
+rename table customers to customers1,customers2 to customers3,customers4 to customers5;对多个表重命名
