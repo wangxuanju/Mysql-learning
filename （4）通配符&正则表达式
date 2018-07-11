@@ -1,0 +1,29 @@
+（1）LIKE操作符
+select prod_id,prod_name from products where prod_name LIKE 'jet%';使用了搜索模式‘jet%’，将检索以jet开头的词，%告诉mysql，jet之后的任意字符
+（根据mysql的配置方式，搜索可以区分大小写）
+select prod_id,prod_name from products where prod_name LIkE '%anvil%';表示可以匹配任何包含文本anvil的值，不论之前或之后出现什么字符
+（通配符可以在搜索模式中任意位置使用，并且可使用多个通配符）
+select prod_name from products where prod_name LIKE 's%e';找出以s开头以e结尾的产品；通配符出现在搜索模式的中间；
+（除了一个字符或多个字符外，%还能匹配0个字符。即%代表搜索模式中给定的0/1/多个字符）
+（2）下划线(_)通配符
+select prod_id,prod_name from products where prod_name LIKE '_ ton anvil';下划线只匹配单个字符，不能匹配0个或多个字符。
+select prod_id,prod_name from products where prod_name LIKE '% ton anvil';
+
+正则表达式
+（3）基本字符匹配
+select prod_name from products where prod_name REGEXP '1000' order by prod_name;REGEXP后跟的维正则表达式
+select prod_name from products where prod_name REGEXP '.1000' order by prod_name;使用正则表达式.000,.是正则中特殊字符，表示任意一个字符
+（mysql中正则表达式匹配是不区分大小写；为区分大小写可以使用BINARY关键字eg:where prod_name REGEXP BINARY 'JetPack .000'）
+（4）进行OR匹配
+select prod_name products where prod_name REGEXP '1000|2000' order by prod_name;|为正则表达式中OR操作符，表示匹配其中之一
+（5）匹配几个字符 之一
+select prod_name from products where prod_name REGEXP '[123] Ton' order by prod_name;[123]意思是匹配1或2或3都行；[]是另一种形式OR语句
+select prod_name from products where prod_name REGEXP '[1|2|3] Ton' order by prod_name;同上的作用一样
+（6）字符集合被否定
+select prod_name from products where prod_name REGEXP '[^123] Ton' order by prod_name;匹配1或2或3之外的字符
+（7）匹配范围
+select prod_name from products where prod_name REGEXP '[0123456789] Ton' order by prod_name;匹配0-9
+select prod_name from products where prod_name REGEXP '[0-9] Ton' order by prod_name;同上
+select prod_name from products where prod_name REGEXP '[a-z] Ton' order by prod_name;
+（8）匹配特殊字符
+select vend_name from vendors where vend_name REGEXP '\\.' order by vend_name;匹配特殊字符，必须以\\为前导，这种处理是转义，应用与特殊字符
