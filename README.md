@@ -1,2 +1,2 @@
 # Mysql-learning
-这个项目使我学习MySQL数据库的实践笔记！
+这个项目是我学习MySQL数据库的笔记！参考书籍《MySQL必知必会》
