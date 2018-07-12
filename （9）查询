@@ -1,0 +1,30 @@
+子查询
+（1）利用子查询进行过滤
+select order_num from orderitems where prod_id='TNT2';
+select cust_id from orders where order_num IN(20005,20007);
+把第一个查询变为子查询组合的两个查询
+select cust_id from orders where order_num IN(
+                            select order_num from orderitems where prod_id = 'TNT2');
+                            
+                            
+把子查询分解为多行并且适当的进行缩进，能简化子查询的使用                            
+select cust_name,cust_contact from customers where cust_id IN(10001,10004);
+select cust_name,cust_contact from customers where cust_id IN(
+                            select cust_id from orders IN(
+                                            select order_num from orderitems where prod_id='TNT2'));
+ where子句中使用子查询能编写出功能很强并且很灵活的SQL子句。对于能嵌套的子查询数目没有限制，实际中由于性能的限制不能嵌套太多
+ 
+(2)作为计算字段使用子查询
+select COUNT(*) as orders from orders where cust_id =10001;
+将COUNT()作为一个子查询
+select cust_name,cust_state,(
+                             select COUNT(*) from orders where cust_id=cust_id) as orders 
+                             from customers order by cust_name;错误的示例
+如果不完全限定列名，mysql将假定你是对orders表中的cust_id进行自身比较；
+正确的方式为：任何时候只要列名可能有多义性，就必须使用语法——表名和列名由一个句号分割
+
+
+
+
+
+
