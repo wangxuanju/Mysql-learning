@@ -1,0 +1,27 @@
+（1）进行全文本搜索支持
+select note_text from productnotes where Match(note_text) Against('rabbit');
+使用了两个函数Match()和Against()执行全文本搜索；其中Match()指定被搜索的列，Against()指定要使用的搜索表达式
+select note_text from productnotes where note_text LIKE '%rabbit%';作用同上
+
+select note_text,Match(note_text) Against('rabbit') as rank from productnotes;
+(2)使用查询扩展
+select note_text from productnotes where Match(note_text) Against('anvils');
+select note_text from productnotes where Match(note_text) Against('anvils' with query expansion);作用同上
+第一行返回7行；第一行包含词anvils，因此等级最高；第二行与anvils无关，因为它包含第一行中的两个词，所以也被检索出来
+（3）布尔文本搜索
+select note_text fron productnotes where Match(note_text) Against('heavy' in boolean mode);
+此全文本搜索检索包含词heavy的所有行（有两行）；其中使用了关键字in boolean mode
+select note_text from productnotes where Match(note_text) Against('heavy -rope*' in boolean mode);
+-rope*明确地指示mysql排除包含rope*(任何以rope开始的词，包含ropes）；
+
+举例说明某些操作符如何操作
+select note_text from productnotes where Match(note_text) Against('+rabbit +bait' in boolean mode);
+搜索匹配的是包含词rabbit和bait的词
+select note_text from productnotes where Match(note_text) Against('rabbit bait' in boolean mode);
+搜索匹配包含rabbit和bait中至少一个词
+select note_text from productnotes where Match(note_text) Against('"rabbit bait"'in boolean mode);
+搜索匹配的短语rabbit bait而不是匹配两个词rabbit和bait
+select note_text from productnotes where Match(note_text) Against('>rabbit <carrot' in boolean mode);
+匹配rabbit和carrot，增加前者的等级，降低后者的等级
+select note_text from productnotes where Match(note_text) Against('+safe+(<combination)' in boolean mode);
+搜索匹配词safe和combination，降低后者的等级
