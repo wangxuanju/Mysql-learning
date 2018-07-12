@@ -24,7 +24,24 @@ select cust_name,cust_state,(
 正确的方式为：任何时候只要列名可能有多义性，就必须使用语法——表名和列名由一个句号分割
 
 
+组合查询——UNION操作符来组合数条SQL查询
+（1）使用UNION
+select vend_id,prod_id,prod_price from products where prod_price<=5;
+select vend_id,prod_id,prod_price from products where vend_id IN(1001,1002);
+select vend_id,prod_id,prod_price from products where prod_price<=5 UNION 
+                                          select vend_id,prod_id,prod_price from products where vend_id IN(1001,1002);
+两条select语句，用UNION关键字分割；UNiON指示mysql执行两条select语句，并把输出结果合成单个查询结果集；
+select vend_id,prod_id,prod_price from products where prod_price<=5 or vend_id in (1001,1002);
+这里用多条where子句而不是使用union的相同查询
+（2）UNION规则
+union必须用两条或两条以上的select语句组成，语句之间用关键字union分割（如果组合4条union语句，将要使用3个union关键字）
+union中的每一个查询必须包含相同的列、表达式或聚集函数（不过各个列不需要以形同的次序列出）
+（3）包含或取消重复的行
+select vend_id,prod_id,prod_price from products where prod_price<=5 union all
+                                      select vend_id,prod_id,prod_price from products where vend_id in(1001,1002);
+使用union all，mysql不取消重复的行（如果需要每个条件的匹配行全部出现（包括重复行），必须使用union all而不是where）
 
-
-
-
+(4)对组合查询结果排序
+select vend_id,prod_id,prod_price from products where prod_price<=5
+                    union select vend_id,prod_id,prod_price from products where vend_id(1001,1002) order by vend_id,prod_price;
+mysql将用它来排序所有select语句返回的所有结果;(在使用union组合查询时，只能使用一条order by 子句，它必须出现在最后一条select语句之后）
