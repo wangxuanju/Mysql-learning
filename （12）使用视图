@@ -1,0 +1,32 @@
+（1）视图——视图是虚拟的表；使用时只包含动态检索数据的查询
+select cust_name,cust_contact from customers,orders,orderitems where customers.cust_id=orders.cust_id
+                                                                 and orderitems.order_num = orders.order_num
+                                                                 and prod_id='TNT2'；
+                                                                 
+select cust_name,cust_contact from productcustomers where prod_id='TNT2';                                                                 
+假如可以把整个查询包装成一个名为productcustomers的虚拟表；productcustomers是一个视图，视图不包含表中应该有的任何列或数据，它包含的是一个SQL查询；
+
+（2）使用视图
+视图用create view 语句来创建
+使用show view viewname来查看创建视图的语句
+用drop删除视图，语法为drop view viewname;
+更新视图时，可以先用drop再用create,也可以用create or replace view
+(3)利用视图简化复杂的联结
+create view productcustomers as select cust_name,cust_contact,prod_id from customers,orders,orderitems 
+                                                                  where customers.cust_id=orders.cust_id
+                                                                  and orderitems.order_num=orders.order_num;
+select cust_name,cust_contact from productcustomers where prod_id='TNT2';
+
+（4）利用视图重新格式化检索出的数据
+select concat(RTrim(vend_name),'(',RTrim(vend_country),')') as vend_title from vendors order by vend_name;
+create view vendorlocations as select concat(RTrim(vend_name),'(',RTrim(vend_country),')') as vend_title 
+                                                                                         from vendors order by vend_name;
+select * from vendorlocations;
+
+（5）用视图过滤不想要的数据
+create view customerseamillist as slect cust_id,cust_name,cust_eamil from customers where cust_eamil is not nul;
+select * from customeremaillist;
+(6)使用视图与计算字段
+select prod_id,quantity,item_price,quantity*item_price as expanded_price from orderitems where order_num=20005;
+create view orderitemsexpanded as select order_num,prod_id,quantity,item_price,quantity*item_price as expanded_price from orderitems;
+select * from orderitemsexpanded where order_num=20005;
