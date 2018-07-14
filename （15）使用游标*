@@ -1,0 +1,42 @@
+游标是一个存储在mysql服务器上的数据库查询；它不是一条select语句，而是被该语句检索出来的结果集；
+（1）使用游标
+create procedure processorders()
+begin
+declare ordernumbers cursor
+for select order_num from  orders;
+end;
+declare命名游标，并定于相应的select语句，根据需要带where和其它的子句；本例命名的游标为ordernumbers(存储过程处理完成后，游标就消失；它仅局限于存储过程）
+（2）打开和关闭游标
+open ordernumbers;处理open语句时执行查询，存储检索出的数据以供浏览和滚动；
+close ordernumbers;close释放游标使用的所有内存和内部资源，因此在每个游标不再需要时都应该关闭；
+
+示例：一个存储过程声明、打开和关闭一个游标
+create procedure processorders()
+begin
+  --declare the cursor
+  declare ordernumbers cursor
+  for select order_num from orders;
+  
+  --open the cursor
+  open ordernumbers;
+  
+  --close the cursor;
+  close ordernumbers;
+end;如果不关闭游标，mysql将会在到达end语句时自动关闭它；
+（3）使用游标数据
+把一个游标打开后，可以使用fetch语句分别访问它的每一行；fetch指定检索什么数据(所需的列）,检索出来的数据存储在什么地方；它还向前移动游标中的内部行指针，
+使下一条fetch语句检索下一行（不重复读取同一行）
+第一个例子:从游标中检索单个行（第一行）
+create procedure processorders()
+begin 
+declare o TNT;
+declare ordernumbers cursor for select order_num from orders;
+open ordernumbers;
+fetch ordernumbers into o;
+close ordernumbers;
+end;
+fetch用来检索当前行的order_num列（将 自动从第一行开始）到第一个名为o的局部变量中；
+
+
+
+
