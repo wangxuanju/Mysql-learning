@@ -1,0 +1,53 @@
+存储过程
+mysql5增加了对存储过程的支持；把处理封装在容易使用的单元中；不要求反复建立一系列的处理步骤；mysql将编写存储过程的安全和访问与执行存储过程的安全与访问分开
+（1）执行存储过程
+call productpricing (@pricelow,@pricehigh,@priceaverage);执行名为productpricing的存储过程，它计算返回产品的最低、最高和平均价格
+mysql创建存储过程的语句为call，call接受存储过程的名字以及需要传递给它的任意的参数
+（2）创建存储过程
+create procedure productpricing()
+begin
+   select Avg(prod_price) as priceaverage from products； 
+end;
+存储过程命名为productpricing，用create procedure productpricing()语句定义。如果存储过程接受参数，它们将在（）中列举出来；
+没有参数，后跟的()仍然需要。begin和end语句用来限定存储过程体，过程体本来仅是一个简单的select语句；
+
+call productpricing();执行刚创建的存储过程并显示返回的结果；因为存储过程实际上是一种函数，所以存储过程名后面要有（）符号
+（2）删除存储过程
+drop procedure productpricing;删除刚创建的存储过程，注意没有使用后面的（）；
+（3）使用参数
+变量是内存中一个特定的位置，用来临时存储数据
+create procedure productpricing (
+             out p1 decimal(8,2),
+             out ph decimal(8,2),
+             out pa decimal(8,2））
+          begin
+             select Min(prod_price)
+             into p1 from products;
+             select Max(prod_price)
+             into ph from products;
+             select Avg(prod_price)
+             into pa from products;
+          end;
+此存储过程接受三个参数：p1存储产品最低价格，ph存储产品的最高价格，pa存储产品的平均价格；关键字out指出相应的参数用来从存储过程传出一个值（返回给调用者）
+mysql支持in（传递给存储过程）、out（从存储过程给出）和inout（对存储过程传入和传出）类型的参数。
+select productpricing(@pricelow,@pricehigh,@priceaverage);此存储过程要求三个参数，因此正好传入三个参数
+select @priceaverage;检索出产品平均价格
+select @pricehigh,@pricelow,@priceaverage;检索产品三种价格
+
+create procedure ordertotal(
+            in onumber int,
+            out ototal decimal(8,2))
+          begin
+            select Sum(item_price*quantity) from orderitems where order_num=onumber into ototal;
+          end;
+ onumber定义为in，订单号被传入存储过程；ototal定义为out，因为要从存储过程返回合计；
+ select语句使用这两个参数，where子句使用onumber选择正确的行，into使用ototal存储计算出来的合计
+
+call ordertotal(20005,@total);必须给ordertotal传递两个参数；第一个参数为订单号，第二个参数为包含计算出来的 合计的变量名
+select @total；@total已由ordertotal的call语句填写，select显示它包含的值
+
+为了调用另一个订单的合计显示，需要再次调用存储过程，然后重新显示变量
+call ordertotal(20009,@total);
+select @total;
+
+(4)建立智能存储过程 难度很大
