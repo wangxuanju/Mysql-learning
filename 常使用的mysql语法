@@ -1,0 +1,52 @@
+（1）一些约定
+NULL|NOT NULL表示或者给出null或者给出not null;
+[like this]包含在方括号中的关键字或子句时可选的
+(2)更新已存在的表
+alter table tablename(
+          add column datetype [null|not null] [constraints],
+          change column datetype[null|not null][constraints],
+          drop column,
+          ....
+      );
+（3）将事务处理写入到数据库
+comomit;
+(4)创建索引
+create index indexname on tablename (column [asc|desc],..);在一个或多个列上创建索引
+（5）创建索引过程
+create procedure procedurename([parameters])
+begin
+...
+end;
+(6)创建新的数据库表
+create table tablename(
+       column datetype [null|not null] [constraints],
+       column datetype [null|not null] [constraints],
+       ...
+     );
+（7）向系统中添加新的用户账户
+create user username[@hostname][idectified by [password] 'password'];
+(8)创建一个或多个表上的新视图
+create [or replace] view viewname as select ...;
+(9)删除一行或多行
+delete from talblename [where...];
+(10)永远的删除数据库对象（表/视图/索引等）
+drop datebase|index|procedure|talbe|trigger|view itemname;
+(11)给表增加一行
+insert into talblename [(columns,...)] values(vslues,...];
+(12)撤销一个事务处理块
+rollback[to savepointname];
+(13)用rollback语句设立保留点
+savepoint sp1;
+(14)从一个或多个表（视图）中检索数据
+select columnname,...
+from talbename,...
+[where ...][union...][group by..][having...][order by..]
+(15)start transaction表示一个新的事务处理块的开始
+start transaction;
+(16)update更新一个表中一行或多行
+update talbename set columnname=value,..[where ..];
+
+
+
+
+      
