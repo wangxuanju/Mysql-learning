@@ -1,0 +1,38 @@
+MyISAM和InnoDB是两种最常用的引擎，前者不支持明确的事务处理管理，而后者支持；
+事务处理用来维护数据库的完整性，它保证成批的mysql操作要么完全执行，要么完全不执行；
+事务指一组SQL语句；
+回退指撤销指定SQL语句的过程；
+提交指未存储的SQL语句结果写入数据库表；
+保留点指事务处理中设置的临时占位符，可以对它发布回退；
+
+（1）控制事务处理
+start transaction;用来标识事务的开始；
+
+（2）使用rollback——此命令用来回退（撤销）mysql语句
+select * from ordertotals;
+start transaction;开始一个事务处理
+delete from ordertotals;删除ordertotals中的所有行
+select * from ordertotals;验证ordertotals确实为空
+rollback;   此语句回退start transaction之后的所有语句
+select * from ordertotals;（rollback只能在一个事务处理内使用，即执行一条start transaction命令之后）
+
+（3）使用commit——隐含提交即提交（写或保存）操作是自动进行的
+但是事务处理中，提交不会隐含的进行；为进行明确的提交，使用commit语句
+start transaction：
+delete from orderitems where order_num=20010;
+delete from order where order_num=20010;
+commit;最后的commit语句仅在不出错时写出修改；
+隐含事务关闭：当commit或rollback语句执行后，事务会自动关闭
+
+（4）使用保留点
+为了支持回退部分事务处理，必须能在事务处理块中合适的位置放置占位符；这样如果需要回退，可以回退到某个占位符；这些占位符称为保留点；
+savepoint delete1;每个保留点都标识它的唯一名字，以便在回退时，mysql知道要退向何处；
+rollback to delete1;为回退到本例给出的保留点；
+mysql代码中设置任意多的保留点，越多越好；因为保留点越多，就越能按自己的意愿灵活的回退；
+保留点在事务完成后自动释放；mysql5以后，可以用release savepoint明确的释放保留点；
+
+（5）更改默认的提交行为——默认的mysql行为是自动提交所有的更改
+set autocommit=0;
+autocommit标志决定是否自动提交更改，不管有没有commit；设置autocommit为0（假）指示mysql不自动提交更改；
+
+
