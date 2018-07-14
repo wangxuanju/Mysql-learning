@@ -6,7 +6,8 @@ select user from users;
 create user ben identified by 'p@$$w0rd';创建个新用户账号，使用create user语句；
 在创建用户账号时不一定需要口令，本例给出了口令；idedtified by 指定的口令为纯文本，mysql将保存到user表之前对其进行加密
 
-为创建一个用户账号，使用rename user语句
+为重新命名一个用户账号，使用rename user语句
+rename user ben to bforta;
 
 (3)删除用户账号（及相关的权限）
 drop user bforta;
@@ -24,4 +25,19 @@ set password for bforta =password('n3w p@$$w0rd');
 
 set password更新用户口令；新口令必须传递到Password()函数进行加密；
 set password=password('n3w p@$$w0rd');设置你自己的口令
+
+数据库维护——mysql提供了一系列的语句，用来保证数据库正确和正常运行
+(1)进行数据库维护
+analyze table orders;analyze table，用来检查表键是否正确；
+check table用来针对很对问题对表进行检查；changed检查自最后一次检查以来改动过的表；extended执行最彻底的检查；fast只检查未正常关闭的表；
+medium检查所有被删除的链接并进行键检验；quick只进行快速扫描；
+
+check table发现和修复问题；
+check table orders,orderitems;
+
+(2)诊断启动问题
+--help显示帮助——一个选项列表
+--safe-mode装载减去某些最佳配置的服务器
+--verbose显示文本消息（为获得更详细的帮助信息与--help联合使用）
+--version显示版本信息然后退出
 
