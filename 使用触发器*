@@ -21,7 +21,8 @@ begin
 end;
 
 
-update触发器在update语句执行之前或之后执行
+update触发器在update语句执行之前或之后执行;
+
 create trigger updatevendor before update on vendors for each row set new.vend_state=Uppder(new.vend_state);
 
 
