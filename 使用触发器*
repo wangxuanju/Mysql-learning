@@ -13,3 +13,15 @@ create trigger neworder after insert on orders for each row select new.order_num
 
 
 
+
+delete触发器
+create trigger deleteorder before delete on orders for each row  
+begin 
+     insert into archive_orders(order_num,order_date,cust_id) values(old.order_num,old.order_date,old.cust_id);
+end;
+
+
+update触发器在update语句执行之前或之后执行
+create trigger updatevendor before update on vendors for each row set new.vend_state=Uppder(new.vend_state);
+
+
