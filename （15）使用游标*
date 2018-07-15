@@ -38,5 +38,60 @@ end;
 fetch用来检索当前行的order_num列（将 自动从第一行开始）到第一个名为o的局部变量中；
 
 
+下面的例子，循环检索数据，从第一行到最后一行
+create procedure processorders()
+begin
+    declare done boolean default0;
+    declar o int;
+    
+    declare orderitems cursor for select order_num from orders;
+    
+    declare continue handler for sqlstate '02000' set done=1;定义了一个continue handler，它是在条件出现时被执行的代码；当sqlstate'02000'
+    出现时，set done=1；
+    
+    open ordernumbers;
+    
+    repeat
+        
+        fetch ordernumbers into 0;
+    until done end repeat;
+    close ordernumbers;
+  end;
+  这个例子使用fetch检索当前order_num到声明的名为o的变量中；这个例子中fetch是在repeat内，因此他反复执行直到done为真（由nutil done end repeat规定）
+
+
+create procedure processorders()
+begin
+   declare done boolean default 0;
+   declare o int;
+   declare t decimal(8,2);
+   
+   declare ordernumbers  cursor for select order_num from orders;
+   
+   declare continue handler for sqlstate '02000' set done=1;
+   
+   create table if not exists ordertotals(order_num int ,total decimal(8,2));
+   
+   open ordernumbers;
+   
+   repeat
+     fetch ordernumbers into o;
+     call ordertotal(o,1,t);
+     
+     insert into ordertotals(order_num,total) values(o,t);
+     
+     until done end repeat;
+     
+     close ordernumbers;
+     
+     end;
+ 我们增加了另一个名为t的变量（存储每个订单的合计）；此存储过程还运行创建了一个新表，名为ordertotals；这个表将保存存储过程生成的结果；fetch像以前一样
+ 取每一个order_num，然后用call执行另一个存储过程来计算每个订单的带税的合计（结果存储到t）;最后用insert保存每个订单的订单号和合计；
+ 
+ 此存储过程不返回数据，但它能够创建和填充另一个表，可以用一条简单的select语句查看该表；
+ select * from ordertotals;
+ 这样我们就得到存储过程、游标、逐行处理以及存储过程调用其它存储过程的一个完整的工作样例；
+
+
 
 
