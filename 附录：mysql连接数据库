@@ -25,4 +25,8 @@ public class DBUtil {
 	}
 
 }
-源代码来源于慕课网之《JDBC之对岸的女孩看过来》的笔记
+
+NAVICAT配置如下：
+（1）连接:任意名；（2）新接数据库本例命名为imooc1；（3）建立表imooc_goddess;
+
+源代码来源于慕课网之《JDBC之对岸的女孩看过来》的个人笔记
