@@ -1,0 +1,28 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+public class DBUtil {
+    private static final String URL="jdbc:mysql://localhost:3306/imooc1";
+    private static final String USER="root";
+    private static final String PASSWORD="wang";
+    
+    
+	public static void main(String[] args) throws Exception {
+		// TODO Auto-generated method stub
+		//1加载驱动程序
+		Class.forName("com.mysql.jdbc.Driver");
+		//2获得数据库连接
+		Connection conn = DriverManager.getConnection(URL,USER,PASSWORD);
+    //3通过数据库的连接操作数据库，实现增删改查
+		Statement stmt = conn.createStatement();
+		ResultSet rs = stmt.executeQuery("select user_name,age from imooc_goddess");//SQL语句一定不能写错！
+		
+		while(rs.next()){
+			System.out.println(rs.getString("user_name")+","+rs.getInt("age"));
+		}
+	}
+
+}
+源代码来源于慕课网之《JDBC之对岸的女孩看过来》的笔记
