@@ -1,3 +1,8 @@
+过滤条件太弱，一次读入过多的信息；
+场景二：使用游标
+海量数据的读取过程中，极有可能产生溢出，因为JVM有内存大小限制；所以每次读入一部分数据，处理完后处理另一部分数据...；
+这种处理方式成为游标，而JDBC支持游标；游标提供一种客户端读取部分服务器端结果集的机制；每一批数据称为FetchSize；
+1.开启游标；2.PreparedStatement有一个SetFetchSize()接口；
 //使用游标读取数据
 import java.sql.Connection;
 import java.sql.DriverManager;
