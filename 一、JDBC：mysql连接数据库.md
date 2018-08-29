@@ -53,6 +53,7 @@ public class JDBC {
 }
 ```
 NAVICAT配置如下：
+
 （1）连接:任意名；
 
 （2）新接数据库本例命名为imooc；
