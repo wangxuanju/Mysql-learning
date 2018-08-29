@@ -13,7 +13,7 @@
 * [十二、撤销一个事务处理块](#十二撤销一个事务处理块)
 * [十三、用rollback语句设立保留点](#十三用rollback语句设立保留点)
 * [十四、从一个或多个表（视图）中检索数据](#十四从一个或多个表（视图）中检索数据)
-* [十五、start transaction表示一个新的事务处理块的开始](#十五start transaction表示一个新的事务处理块的开始)
+* [十五、start&nbsp;transaction表示一个新的事务处理块的开始](#十五start&nbsp;transaction表示一个新的事务处理块的开始)
 * [十六、update更新一个表中一行或多行](#十六update更新一个表中一行或多行)
 <!-- GFM-TOC -->
 
