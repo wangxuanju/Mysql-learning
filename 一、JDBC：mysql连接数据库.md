@@ -1,3 +1,4 @@
+```java
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -50,6 +51,6 @@ public class JDBC {
 		helloword();
 	}
 }
-
+```
 NAVICAT配置如下：
 （1）连接:任意名；（2）新接数据库本例命名为imooc；（3）建立表imooc_goddess;
