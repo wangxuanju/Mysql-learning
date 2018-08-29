@@ -1,7 +1,8 @@
-场景三：大字段
+# 场景三：大字段
 读取数据库表大字段；即使读取一条记录，也有可能记录太大了，出现内存溢出的问题；采取流方式，大字段以二进制的方式进行划分，分为多个区间，每次读取一个区间；
 流方式使用ResultSet.getBinaryStream()方法；
 读取数据库大字段：使用流方式
+```java
 //函数（方法）中的内容
 	Connection conn = null;
 	PreparedStatement ptmt = null;
@@ -32,5 +33,4 @@
 	}catch(SQLException e){
   // ignore
   }
-  
-  
+``` 
