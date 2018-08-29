@@ -1,8 +1,22 @@
-（1）文本处理函数
+<!-- GFM-TOC -->
+* [一、文本处理函数](#一文本处理函数)
+* [二、常用的文本处理函数](#二常用的文本处理函数)
+* [三、日期和时间处理函数](#三日期和时间处理函数)
+* [四、数值处理函数](#四数值处理函数)
+* [五、聚集函数](#五聚集函数)
+* [六、AVG（）函数](#六AVG（）函数)
+* [七、COUNT()函数](#七COUNT()函数)
+* [八、MAX()函数](#八MAX()函数)
+* [九、MIN()函数](#九MIN()函数)
+* [十、SUM()函数](#十SUM()函数)
+* [十一、聚集不同的值](#十一聚集不同的值)
+* [十二、组合聚集函数](#十二组合聚集函数)
+<!-- GFM-TOC -->
+# 一、文本处理函数
 select vend_name,Upper(vend_name) as vend_name_upcase from vendors order by vend_name;使用Upper()将文本转换为大写
 select cust_name,cust_contact from customers where Sondex(cust_contact)=Soundex('Y Lie');Soundex()函数匹配所以发音类似Y Lie的名字
 Soundex()是一个将任何字符串转换为描述其语言表示的字母数字模式的算法；
-（2）常用的文本处理函数
+# 二、常用的文本处理函数
 Left()返回左边的字符
 Length()返回串的长度
 Locate()找出串的一个子串
@@ -13,7 +27,7 @@ RTrim()去掉串右边的空格
 Soundex()返回串的SOUNDEX值
 SubString()返回子串的字符
 Upper()将串转换为大写
-（3）日期和时间处理函数
+# 三、日期和时间处理函数
 select cust_id,order_num from orders where Date(order_date) = '2005-09-01';如果你想要的仅是日期，则使用Date()是一个好习惯
 存在一个Time()函数，在你想要时间时应该使用它
 
@@ -21,37 +35,53 @@ select cust_id,order_num from orders where Date(order_date) between '2005-09-01'
 between操作符用来把2005-09-01和2005-09-30定义的为一个要匹配的日期范围
 select cust_id,order_num from orders where Year(order_date)=2005 and Month(order_date)=9;作用同上
 Year()是一个日期中返回的年份；类似，Month()是一个日期中返回的月份
-（4）数值处理函数
+# 四、数值处理函数
 
-汇总数据
-（5）聚集函数——运行在行组上，计算返回单个值的函数
+# 汇总数据
+# 五、聚集函数
+聚集函数——运行在行组上，计算返回单个值的函数
+```java
 AVG（）返回某列的平均值
 COUNT（）返回某列的行数
 MAX（）返回某列的最大值
 MIN（）返回某列的最小值
 SUM（）返回某列的和
-（6）AVG（）函数——确定特定数值列的平均值，忽略列值为NULL的行
+```
+# 六、AVG（）函数
+AVG（）函数——确定特定数值列的平均值，忽略列值为NULL的行
+```java
 select AVG(prod_price) as avg_price from products where vend_id=1003;AVG函数返回所有产品的平均价格
-(7)COUNT()函数——确定表中行的数目或符合特定条件行的数目
+```
+# 七、COUNT()函数
+COUNT()函数——确定表中行的数目或符合特定条件行的数目
+```java
 select COUNT(*) as num_cust from customers;COUNT(*)对表中行的数目进行计数；COUNT(column)对特定列中具有值的行进行计数，忽略NULL值
 select COUNT(cust_email) as num_cust from customers;COUNT(column)对特定列中具有值的行进行计数，忽略NULL值
-(8)MAX()函数——返回指定列中的最大值
+```
+# 八、MAX()函数
+MAX()函数——返回指定列中的最大值
+```java
 select MAX(prod_price) as max_price from products;
-（9）MIN()函数
+```
+# 九、MIN()函数
+```java
 select MIN(prod_price) as min_price from products;
-(10)SUM()函数——返回指定列值的和（总计）
+```
+# 十、SUM()函数
+SUM()函数——返回指定列值的和（总计）
+```java
 select SUM(quantity) as item_ordered from orderitems where order_num=20005;
 select SUM(item_price*quantity) as total_price from orderitems where order_num=20005;
-(11)聚集不同的值
+```
+# 十一、聚集不同的值
+```java
 select AVG(DISTINCT prod_price) as avg_price from products where vend_id=1003;使用DISTINCT参数，只参考不同的值
-（12）组合聚集函数
+```
+# 十二、组合聚集函数
+```java
 select COUNT(*) as num_items， 
                MIN(prod_price) as price_min,
                MAX(prod_price) as price_max,
                AVG(prod_price) as price_avg form products;
 select语句包含多个聚集函数
-
-
-
-
-
+```
