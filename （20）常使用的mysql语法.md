@@ -82,7 +82,7 @@ select columnname,...
 from talbename,...
 [where ...][union...][group by..][having...][order by..]
 ```
-# 十五、start transaction表示一个新的事务处理块的开始
+# 十五、start&nbsp;transaction表示一个新的事务处理块的开始
 start transaction;
 # 十六、update更新一个表中一行或多行
 ```java
