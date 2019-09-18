@@ -64,7 +64,7 @@ NoSQL(NoSQL = Not Only SQL)，意即“不仅仅是SQL”，是一项全新的�
 					数据模型：图结构
 					优势：利用图结构相关算法。
 					劣势：需要对整个图做计算才能得出结果，不容易做分布式的集群方案。
-### 1.3 什么是Redis
+## 1.3 什么是Redis
 Redis是用C语言开发的一个开源的高性能键值对（key-value）数据库，官方提供测试数据，50个并发执行100000个请求,读的速度是110000次/s,写的速度是81000次/s ，且Redis通过提供多种键值数据类型来适应不同场景下的存储需求，目前为止Redis支持的键值数据类型如下：
 				1) 字符串类型 string
 				2) 哈希类型 hash
@@ -165,7 +165,8 @@ Redis是用C语言开发的一个开源的高性能键值对（key-value）数�
 			3. 删除：srem key value:删除set集合中的某个元素	
 				127.0.0.1:6379> srem myset a
 				(integer) 1
-		6. 有序集合类型 sortedset：不允许重复元素，且元素有顺序.每个元素都会关联一个double类型的分数。redis正是通过分数来为集合中的成员进行从小到大的排序。
+				
+6. 有序集合类型 sortedset：不允许重复元素，且元素有顺序.每个元素都会关联一个double类型的分数。redis正是通过分数来为集合中的成员进行从小到大的排序。
 
 			1. 存储：zadd key score value
 				127.0.0.1:6379> zadd mysort 60 zhangsan
@@ -197,7 +198,7 @@ Redis是用C语言开发的一个开源的高性能键值对（key-value）数�
 			3. del key：删除指定的key value
 
 
-	4. 持久化
+## 4. 持久化
 		1. redis是一个内存数据库，当redis服务器重启，获取电脑重启，数据会丢失，我们可以将redis内存中的数据持久化保存到硬盘的文件中。
 		2. redis持久化机制：
 			1. RDB：默认方式，不需要进行配置，默认就使用这种机制
@@ -221,7 +222,7 @@ Redis是用C语言开发的一个开源的高性能键值对（key-value）数�
 					appendfsync everysec ： 每隔一秒进行一次持久化
 					# appendfsync no	 ： 不进行持久化
 
-	5. Java客户端 Jedis
+## 5. Java客户端 Jedis
 		* Jedis: 一款java操作redis数据库的工具.
 		* 使用步骤：
 			1. 下载jedis的jar包
