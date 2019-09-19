@@ -215,6 +215,12 @@ public class JedisPoolUtils {
     }
 }
 ```
+```java jedis.properties
+host=127.0.0.1
+port=6379
+maxTotal=50
+maxIdle=10
+```
 ## JDBCUtils类
 ```java
 import com.alibaba.druid.pool.DruidDataSourceFactory;
@@ -258,4 +264,13 @@ public class JDBCUtils {
         return  ds.getConnection();
     }
 }
+```
+```java  druid.properties
+driverClassName=com.mysql.jdbc.Driver
+url=jdbc:mysql:///day23
+username=root
+password=root
+initialSize=5
+maxActive=10
+maxWait=3000
 ```
