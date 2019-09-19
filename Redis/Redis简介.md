@@ -228,27 +228,27 @@ Redis是用C语言开发的一个开源的高性能键值对（key-value）数�
         		jedis.close();
 
 		
-    * Jedis操作各种redis中的数据结构
-	1) 字符串类型 string
+## Jedis操作各种redis中的数据结构
+    1) 字符串类型 string
 				set
 				get
 				
-			//1. 获取连接
-		        Jedis jedis = new Jedis();//如果使用空参构造，默认值 "localhost",6379端口
-		        //2. 操作
-		        //存储
-		        jedis.set("username","zhangsan");
-		        //获取
-		        String username = jedis.get("username");
-		        System.out.println(username);
+	    //1. 获取连接
+	    Jedis jedis = new Jedis();//如果使用空参构造，默认值 "localhost",6379端口
+             //2. 操作
+             //存储
+	    jedis.set("username","zhangsan");
+	   //获取
+            String username = jedis.get("username");
+	   System.out.println(username);
 		
-		        //可以使用setex()方法存储可以指定过期时间的 key value
-		        jedis.setex("activecode",20,"hehe");//将activecode：hehe键值对存入redis，并且20秒后自动删除该键值对
+	   //可以使用setex()方法存储可以指定过期时间的 key value
+	   jedis.setex("activecode",20,"hehe");//将activecode：hehe键值对存入redis，并且20秒后自动删除该键值对
 		
-		        //3. 关闭连接
-		        jedis.close();
+	   //3. 关闭连接
+	   jedis.close();
 
-	2) 哈希类型 hash ： map格式  
+    2) 哈希类型 hash ： map格式  
 				hset
 				hget
 				hgetAll
@@ -377,8 +377,7 @@ Redis是用C语言开发的一个开源的高性能键值对（key-value）数�
 				
 				    static{
 				        //读取配置文件
-				        InputStream is =
-				              JedisPoolUtils.class.getClassLoader().getResourceAsStream("jedis.properties");
+		 InputStream is =JedisPoolUtils.class.getClassLoader().getResourceAsStream("jedis.properties");
 				        //创建Properties对象
 				        Properties pro = new Properties();
 				        //关联文件
@@ -393,7 +392,7 @@ Redis是用C语言开发的一个开源的高性能键值对（key-value）数�
 				        config.setMaxIdle(Integer.parseInt(pro.getProperty("maxIdle")));
 				
 				        //初始化JedisPool
-				        jedisPool = new JedisPool(config,pro.getProperty("host"),Integer.parseInt(pro.getProperty("port")));
+		jedisPool = new JedisPool(config,pro.getProperty("host"),Integer.parseInt(pro.getProperty("port")));
 				    }
 				
 				    /** 获取连接方法*/
