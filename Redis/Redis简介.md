@@ -205,7 +205,7 @@ Redis是用C语言开发的一个开源的高性能键值对（key-value）数�
 					save 60 10000
 					
 				2. 重新启动redis服务器，并指定配置文件名称
-					D:\JavaWeb2018\day23_redis\资料\redis\windows-64\redis-2.8.9>redis-server.exe redis.windows.conf	
+		        D:\JavaWeb2018\day23_redis\资料\redis\windows-64\redis-2.8.9>redis-server.exe redis.windows.conf	
 				
 			2. AOF：日志记录的方式，可以记录每一条命令的操作。可以每一次命令操作后，持久化数据
 				1. 编辑redis.windwos.conf文件
@@ -346,13 +346,10 @@ Redis是用C语言开发的一个开源的高性能键值对（key-value）数�
 				
 		        //3. 关闭连接
 		        jedis.close();
-
-
-		
-	* jedis连接池： JedisPool
-		* 使用：
-	              1. 创建JedisPool连接池对象
-		      2. 调用方法 getResource()方法获取Jedis连接
+# jedis连接池： JedisPool
+```java
+* 使用：1. 创建JedisPool连接池对象
+        2. 调用方法 getResource()方法获取Jedis连接
 				
 				//0.创建一个配置对象
 			        JedisPoolConfig config = new JedisPoolConfig();
@@ -369,15 +366,18 @@ Redis是用C语言开发的一个开源的高性能键值对（key-value）数�
 			
 			        //4. 关闭 归还到连接池中
 			        jedis.close();
-			
-			* 连接池工具类
+```	
+
+# 连接池工具类
+```java
 				public class JedisPoolUtils {
 
 				    private static JedisPool jedisPool;
 				
 				    static{
 				        //读取配置文件
-		 InputStream is =JedisPoolUtils.class.getClassLoader().getResourceAsStream("jedis.properties");
+		                    InputStream is =JedisPoolUtils.class.getClassLoader().
+		                        getResourceAsStream("jedis.properties");
 				        //创建Properties对象
 				        Properties pro = new Properties();
 				        //关联文件
@@ -392,7 +392,8 @@ Redis是用C语言开发的一个开源的高性能键值对（key-value）数�
 				        config.setMaxIdle(Integer.parseInt(pro.getProperty("maxIdle")));
 				
 				        //初始化JedisPool
-		jedisPool = new JedisPool(config,pro.getProperty("host"),Integer.parseInt(pro.getProperty("port")));
+		                        jedisPool = new JedisPool(config,pro.getProperty("host"),
+		                            Integer.parseInt(pro.getProperty("port")));
 				    }
 				
 				    /** 获取连接方法*/
@@ -401,7 +402,7 @@ Redis是用C语言开发的一个开源的高性能键值对（key-value）数�
 				    }
 				}
 
-
+```
     * 注意：使用redis缓存一些不经常发生变化的数据。
 		* 数据库的数据一旦发生改变，则需要更新缓存。
 			* 数据库的表执行 增删改的相关操作，需要将redis缓存数据情况，再次存入
