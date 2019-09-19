@@ -88,7 +88,6 @@ public class ProvinceServiceImpl implements ProvinceService {
     public List<Province> findAll() {
         return dao.findAll();
     }
-
     /**使用redis缓存 */
 
     @Override
@@ -121,7 +120,6 @@ public class ProvinceServiceImpl implements ProvinceService {
             System.out.println("redis中有数据，查询缓存...");
         }
 
-
         return province_json;
     }
 }
@@ -150,7 +148,6 @@ public class ProvinceServlet extends HttpServlet {
         //1.调用service查询
         ProvinceService service = new ProvinceServiceImpl();
         String json = service.findAllJson();
-
 
         System.out.println(json);
         //3.响应结果
