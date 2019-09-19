@@ -146,8 +146,8 @@ public class JedisTest {
 
         //0.创建一个配置对象
         JedisPoolConfig config = new JedisPoolConfig();
-        config.setMaxTotal(50);
-        config.setMaxIdle(10);
+        config.setMaxTotal(50);//最大允许连接数
+        config.setMaxIdle(10); //最大空闲连接
 
         //1.创建Jedis连接池对象
         JedisPool jedisPool = new JedisPool(config,"localhost",6379);
