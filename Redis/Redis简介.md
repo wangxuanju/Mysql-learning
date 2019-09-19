@@ -216,7 +216,7 @@ Redis是用C语言开发的一个开源的高性能键值对（key-value）数�
 					# appendfsync no	 ： 不进行持久化
 
 ## 5. Java客户端 Jedis
-		* Jedis: 一款java操作redis数据库的工具.
+    * Jedis: 一款java操作redis数据库的工具.
 		* 使用步骤：
 			1. 下载jedis的jar包
 			2. 使用
@@ -228,12 +228,12 @@ Redis是用C语言开发的一个开源的高性能键值对（key-value）数�
         		jedis.close();
 
 		
-		* Jedis操作各种redis中的数据结构
-			1) 字符串类型 string
+    * Jedis操作各种redis中的数据结构
+	1) 字符串类型 string
 				set
 				get
 				
-				 //1. 获取连接
+			//1. 获取连接
 		        Jedis jedis = new Jedis();//如果使用空参构造，默认值 "localhost",6379端口
 		        //2. 操作
 		        //存储
@@ -248,11 +248,11 @@ Redis是用C语言开发的一个开源的高性能键值对（key-value）数�
 		        //3. 关闭连接
 		        jedis.close();
 
-			2) 哈希类型 hash ： map格式  
+	2) 哈希类型 hash ： map格式  
 				hset
 				hget
 				hgetAll
-				//1. 获取连接
+			//1. 获取连接
 		        Jedis jedis = new Jedis();//如果使用空参构造，默认值 "localhost",6379端口
 		        //2. 操作
 		        // 存储hash
@@ -280,12 +280,12 @@ Redis是用C语言开发的一个开源的高性能键值对（key-value）数�
 		        jedis.close();
 
 
-			3) 列表类型 list ： linkedlist格式。支持重复元素
+	3) 列表类型 list ： linkedlist格式。支持重复元素
 				lpush / rpush
 				lpop / rpop
 				lrange start end : 范围获取
 				
-				 //1. 获取连接
+			//1. 获取连接
 		        Jedis jedis = new Jedis();//如果使用空参构造，默认值 "localhost",6379端口
 		        //2. 操作
 		        // list 存储
@@ -311,14 +311,13 @@ Redis是用C语言开发的一个开源的高性能键值对（key-value）数�
 		        jedis.close();
 
 
-			4) 集合类型 set  ： 不允许重复元素
+	4) 集合类型 set  ： 不允许重复元素
 				sadd
 				smembers:获取所有元素
 
-				//1. 获取连接
+			//1. 获取连接
 		        Jedis jedis = new Jedis();//如果使用空参构造，默认值 "localhost",6379端口
 		        //2. 操作
-		
 		
 		        // set 存储
 		        jedis.sadd("myset","java","php","c++");
@@ -329,11 +328,11 @@ Redis是用C语言开发的一个开源的高性能键值对（key-value）数�
 		
 		        //3. 关闭连接
 		        jedis.close();
-			5) 有序集合类型 sortedset：不允许重复元素，且元素有顺序
+	5) 有序集合类型 sortedset：不允许重复元素，且元素有顺序
 				zadd
 				zrange
 
-				//1. 获取连接
+			//1. 获取连接
 		        Jedis jedis = new Jedis();//如果使用空参构造，默认值 "localhost",6379端口
 		        //2. 操作
 		        // sortedset 存储
@@ -342,21 +341,20 @@ Redis是用C语言开发的一个开源的高性能键值对（key-value）数�
 		        jedis.zadd("mysortedset",55,"孙悟空");
 		
 		        // sortedset 获取
-		        Set<String> mysortedset = jedis.zrange("mysortedset", 0, -1);
-		
+		        Set<String> mysortedset = jedis.zrange("mysortedset", 0, -1);	
 		        System.out.println(mysortedset);
-		
-		
+				
 		        //3. 关闭连接
 		        jedis.close();
 
 
 		
-		* jedis连接池： JedisPool
-			* 使用：
-				1. 创建JedisPool连接池对象
-				2. 调用方法 getResource()方法获取Jedis连接
-					//0.创建一个配置对象
+	* jedis连接池： JedisPool
+		* 使用：
+	              1. 创建JedisPool连接池对象
+		      2. 调用方法 getResource()方法获取Jedis连接
+				
+				//0.创建一个配置对象
 			        JedisPoolConfig config = new JedisPoolConfig();
 			        config.setMaxTotal(50);
 			        config.setMaxIdle(10);
@@ -369,7 +367,6 @@ Redis是用C语言开发的一个开源的高性能键值对（key-value）数�
 			        //3. 使用
 			        jedis.set("hehe","heihei");
 			
-			
 			        //4. 关闭 归还到连接池中
 			        jedis.close();
 			
@@ -380,7 +377,8 @@ Redis是用C语言开发的一个开源的高性能键值对（key-value）数�
 				
 				    static{
 				        //读取配置文件
-				        InputStream is = JedisPoolUtils.class.getClassLoader().getResourceAsStream("jedis.properties");
+				        InputStream is =
+				              JedisPoolUtils.class.getClassLoader().getResourceAsStream("jedis.properties");
 				        //创建Properties对象
 				        Properties pro = new Properties();
 				        //关联文件
@@ -396,22 +394,16 @@ Redis是用C语言开发的一个开源的高性能键值对（key-value）数�
 				
 				        //初始化JedisPool
 				        jedisPool = new JedisPool(config,pro.getProperty("host"),Integer.parseInt(pro.getProperty("port")));
-				
-				
-				
 				    }
 				
-				
-				    /**
-				     * 获取连接方法
-				     */
+				    /** 获取连接方法*/
 				    public static Jedis getJedis(){
 				        return jedisPool.getResource();
 				    }
 				}
 
 
-	* 注意：使用redis缓存一些不经常发生变化的数据。
+    * 注意：使用redis缓存一些不经常发生变化的数据。
 		* 数据库的数据一旦发生改变，则需要更新缓存。
 			* 数据库的表执行 增删改的相关操作，需要将redis缓存数据情况，再次存入
 			* 在service对应的增删改方法中，将redis数据删除。
