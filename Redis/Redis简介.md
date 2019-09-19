@@ -370,38 +370,38 @@ Redis是用C语言开发的一个开源的高性能键值对（key-value）数�
 
 # 连接池工具类
 ```java
-				public class JedisPoolUtils {
+public class JedisPoolUtils {
 
-				    private static JedisPool jedisPool;
+	private static JedisPool jedisPool;
 				
-				    static{
-				        //读取配置文件
-		                    InputStream is =JedisPoolUtils.class.getClassLoader().
-		                        getResourceAsStream("jedis.properties");
-				        //创建Properties对象
-				        Properties pro = new Properties();
-				        //关联文件
-				        try {
-				            pro.load(is);
-				        } catch (IOException e) {
-				            e.printStackTrace();
-				        }
-				        //获取数据，设置到JedisPoolConfig中
-				        JedisPoolConfig config = new JedisPoolConfig();
-				        config.setMaxTotal(Integer.parseInt(pro.getProperty("maxTotal")));
-				        config.setMaxIdle(Integer.parseInt(pro.getProperty("maxIdle")));
+	static{
+	//读取配置文件
+	    InputStream is =JedisPoolUtils.class.getClassLoader().getResourceAsStream("jedis.properties");
+	    //创建Properties对象
+	     Properties pro = new Properties();
+	     
+	     //关联文件
+	     try {
+	         pro.load(is);
+	     } catch (IOException e) {
+                 e.printStackTrace();
+	     }
+	     
+	     //获取数据，设置到JedisPoolConfig中
+	     JedisPoolConfig config = new JedisPoolConfig();
+	     config.setMaxTotal(Integer.parseInt(pro.getProperty("maxTotal")));
+	     config.setMaxIdle(Integer.parseInt(pro.getProperty("maxIdle")));
 				
-				        //初始化JedisPool
-		                        jedisPool = new JedisPool(config,pro.getProperty("host"),
-		                            Integer.parseInt(pro.getProperty("port")));
-				    }
+	     //初始化JedisPool
+             jedisPool = new JedisPool(config,pro.getProperty("host"),Integer.parseInt(pro.getProperty("port")));
+	     
+         }
 				
-				    /** 获取连接方法*/
-				    public static Jedis getJedis(){
-				        return jedisPool.getResource();
-				    }
-				}
-
+	  /** 获取连接方法*/
+	 public static Jedis getJedis(){
+	     return jedisPool.getResource();
+	 }
+}
 ```
     * 注意：使用redis缓存一些不经常发生变化的数据。
 		* 数据库的数据一旦发生改变，则需要更新缓存。
