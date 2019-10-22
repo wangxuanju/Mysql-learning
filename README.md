@@ -11,3 +11,9 @@
 （5）疑难点（over/merge/join on/外键和主键等复杂语句）<br>
 注：理解有待深入，有些语句应烂熟于心<br>
 下一步提高方式：建议做LeetCode上MySQL类型的题
+# MySQL语句的熟练使用（第二阶段）
+独立完成LeetCode上MySQL类型的题
+
+《redis》缓存、大批量数据的存储
+
+《高性能MySQL》理论的深入理解（做笔记）
